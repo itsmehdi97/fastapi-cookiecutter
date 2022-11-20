@@ -1,0 +1,8 @@
+{
+    "full_name": "Mehdi Kamani",
+    "email": "itsmehdi97@gmail.com",
+    "github_username": "itsmehdi97",
+    "project_name": "FastAPI Project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "project_short_description": "FastAPI project"
+  }

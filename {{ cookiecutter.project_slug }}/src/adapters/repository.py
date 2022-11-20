@@ -47,5 +47,5 @@ class TaskRepository(BaseRepository):
         db_task = models.Task(**task.dict())
         self.db.add(db_task)
         await self.db.commit()
-        await self.db.refresh()
+        await self.db.refresh(db_task)
         return db_task

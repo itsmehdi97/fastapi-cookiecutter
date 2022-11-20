@@ -2,12 +2,15 @@ import pytest
 import pytest_asyncio
 from unittest import mock
 
-from core.config import get_settings
+from fastapi.testclient import TestClient
+
+# from core.config import get_settings
 from models import mapper_registry
 from db.tasks import connect_to_db
+from api.server import get_application
 
 
-settings = get_settings()
+# settings = get_settings()
 
 
 @pytest.fixture
@@ -37,16 +40,16 @@ async def memory_session_factory():
     await engine.dispose()
 
 
-@pytest_asyncio.fixture
-async def session_factory():
-    session, engine = await connect_to_db(url=settings.DATABASE_URL)
-    async with engine.begin() as conn:
-        await conn.run_sync(mapper_registry.metadata.drop_all)
-        await conn.run_sync(mapper_registry.metadata.create_all)
+# @pytest_asyncio.fixture
+# async def session_factory():
+#     session, engine = await connect_to_db(url=settings.DATABASE_URL)
+#     async with engine.begin() as conn:
+#         await conn.run_sync(mapper_registry.metadata.drop_all)
+#         await conn.run_sync(mapper_registry.metadata.create_all)
 
-    yield session
+#     yield session
 
-    await engine.dispose()
+#     await engine.dispose()
 
 
 @pytest_asyncio.fixture
@@ -61,6 +64,12 @@ async def db(session_factory):
     session = session_factory()
     yield session
     await session.close()
+
+
+@pytest.fixture
+def test_client():
+    with TestClient(get_application()) as client:
+        yield client
 
 
 # @pytest.fixture

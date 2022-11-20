@@ -6,7 +6,6 @@ from schemas.base import BaseSchema
 
 class TaskBase(BaseSchema):
     title: str
-    project_id: int
 
 
 class TaskCreate(TaskBase):

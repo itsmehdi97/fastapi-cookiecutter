@@ -35,4 +35,3 @@ class Task(BaseModel):
     id = Column(Integer, primary_key=True)
     title = Column(String(length=128), nullable=True)
     desc = Column(Text(), nullable=True)
-    project_id = Column(ForeignKey("project.id"), nullable=False)
